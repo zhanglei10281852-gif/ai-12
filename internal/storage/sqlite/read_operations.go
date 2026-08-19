@@ -223,12 +223,8 @@ func (q *queries) ListSnapshots(ctx context.Context, filter repository.SnapshotF
 func buildSnapshotWhere(filter repository.SnapshotFilter) (string, []any) {
 	clauses := make([]string, 0, 5)
 	args := make([]any, 0, 5)
-	if scope, scopeArgs := filter.ScopeTerms(); scope != "" {
-		clauses = append(clauses, scope)
-		args = append(args, scopeArgs...)
-	}
 	values := []struct{ column, value string }{
-		{"run_id", filter.InferenceRunID}, {"state", string(filter.State)},
+		{"workspace_id", filter.WorkspaceID}, {"source_zone_id", filter.DataZoneID}, {"run_id", filter.InferenceRunID}, {"state", string(filter.State)},
 	}
 	for _, item := range values {
 		if item.value != "" {

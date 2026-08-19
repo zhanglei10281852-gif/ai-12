@@ -113,19 +113,6 @@ type SnapshotFilter struct {
 	ExpiresBy      *time.Time
 }
 
-func (f SnapshotFilter) ScopeTerms() (string, []any) {
-	switch {
-	case f.WorkspaceID != "" && f.DataZoneID != "":
-		return "(workspace_id = ? OR source_zone_id = ?)", []any{f.WorkspaceID, f.DataZoneID}
-	case f.WorkspaceID != "":
-		return "workspace_id = ?", []any{f.WorkspaceID}
-	case f.DataZoneID != "":
-		return "source_zone_id = ?", []any{f.DataZoneID}
-	default:
-		return "", nil
-	}
-}
-
 type SnapshotPage struct {
 	Items []domain.DatasetSnapshot
 	Total int
